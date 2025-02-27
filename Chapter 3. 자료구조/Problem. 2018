@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	long N;
+	cin >> N;
+
+	long start = 1, end = 1, answer = 0;
+
+	while (end <= N) {
+		if ((end * (end + 1) - ((start - 1) * start)) / 2 < N) {
+			end++;
+		}
+		else if ((end * (end + 1) - ((start - 1) * start)) / 2 == N) {
+			end++;
+			answer++;
+		}
+		else {
+			start++;
+		}
+	}
+
+	cout << answer << '\n';
+	return 0;
+}
