@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N, M, A;
+	cin >> N >> M;
+	vector<int> arr(N + 1, 0);
+
+	for (int i = 1; i <= N; i++) {
+		cin >> A;
+		arr[i] = arr[i - 1] + A;
+	}
+	
+	int i, j;
+
+	for (int k = 0; k < M; k++) {
+		cin >> i >> j;
+		cout << arr[j] - arr[i - 1] << '\n';
+	}
+}
