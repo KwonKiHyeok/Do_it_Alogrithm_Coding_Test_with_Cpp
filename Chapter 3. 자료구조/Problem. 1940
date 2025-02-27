@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N, number;
+	long M;
+	cin >> N;
+	cin >> M;
+
+	vector<int> v(N, 0);
+
+	for (int i = 0; i < N; i++) {
+		cin >> number;
+		v[i] = number;
+	}
+
+	sort(v.begin(), v.end());
+
+	int answer = 0;
+	int start = 0, end = N - 1;
+	
+	while (start < end) {
+		if (v[end] + v[start] < M) {
+			start++;
+		}
+		else if (v[end] + v[start] > M) {
+			end--;
+		}
+		else {
+			answer++;
+			start++;
+			end--;
+		}
+	}
+
+	cout << answer << '\n';
+	return 0;
+}
