@@ -1,0 +1,54 @@
+// Baekjoon Online Judge Problem. 12891
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int S, P;
+	cin >> S >> P;
+	vector<char> v(S);
+
+	for (int i = 0; i < S; i++) {
+		cin >> v[i];
+	}
+
+	int A, C, G, T, answer = 0;
+	int a = 0, c = 0, g = 0, t = 0;
+	cin >> A >> C >> G >> T;
+
+	for (int i = 0; i <= S - P; i++) {
+		if (i == 0) {
+			for (int j = 0; j < P; j++) {
+				if (v[j] == 'A') a++;
+				else if (v[j] == 'C') c++;
+				else if (v[j] == 'G') g++;
+				else if (v[j] == 'T') t++;
+			}
+		}
+		else {
+			if (v[i - 1] == 'A') a--;
+			else if (v[i - 1] == 'C') c--;
+			else if (v[i - 1] == 'G') g--;
+			else if (v[i - 1] == 'T') t--;
+
+			if (v[i + P - 1] == 'A') a++;
+			else if (v[i + P - 1] == 'C') c++;
+			else if (v[i + P - 1] == 'G') g++;
+			else if (v[i + P - 1] == 'T') t++;
+		}
+
+		if (a >= A && c >= C && g >= G && t >= T) {
+			answer++;
+		}
+	}
+
+	cout << answer << '\n';
+
+	return 0;
+}
