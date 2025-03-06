@@ -1,0 +1,45 @@
+// Baekjoon Online Judge Problem. 1427
+
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	string str;
+	cin >> str;
+	vector<int> v(str.size(), 0);
+
+	for (int i = 0; i < str.size(); i++) {
+		v[i] = str[i] - '0';
+	}
+
+	for (int i = 0; i < str.size(); i++) {
+		pair<int, int> max;
+		max.first = v[i];
+		max.second = i;
+
+		for (int j = i; j < str.size(); j++) {
+			if (max.first < v[j]) {
+				max.first = v[j];
+				max.second = j;
+			}
+		}
+
+		int temp = v[i];
+		v[i] = max.first;
+		v[max.second] = temp;
+		
+	}
+
+	for (int i = 0; i < str.size(); i++) {
+		cout << v[i];
+	}
+
+	return 0;
+}
