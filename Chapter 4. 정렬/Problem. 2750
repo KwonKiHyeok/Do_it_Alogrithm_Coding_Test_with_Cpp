@@ -1,0 +1,35 @@
+// Baekjoon Online Judge Problem. 2750
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N;
+	cin >> N;
+	vector<int> myVector(N, 0);
+
+	for (int i = 0; i < N; i++) {
+		cin >> myVector[i];
+	}
+
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N - i - 1; j++) {
+			if (myVector[j] > myVector[j + 1]) {
+				int temp = myVector[j];
+				myVector[j] = myVector[j + 1];
+				myVector[j + 1] = temp;
+			}
+		}
+	}
+
+	for (int i = 0; i < N; i++) {
+		cout << myVector[i] << '\n';
+	}
+
+	return 0;
+}
