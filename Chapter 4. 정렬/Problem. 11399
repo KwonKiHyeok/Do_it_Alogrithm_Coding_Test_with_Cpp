@@ -1,0 +1,45 @@
+// Baekjoon Online Judge Problem. 11399
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+
+	int N;
+	cin >> N;
+	vector<int> v(N, 0);
+
+	for (int i = 0; i < N; i++) {
+		cin >> v[i];
+	}
+	
+	for (int i = 1; i < N; i++) {
+		int index = i - 1;
+		int temp = v[i];
+
+		while (index >= 0 && temp < v[index]) {
+			v[index + 1] = v[index];
+			index--;
+		}
+
+		v[index + 1] = temp;
+	}
+
+	int sum = v[0];
+	
+	for (int i = 1; i < N; i++) {
+		v[i] = v[i] + v[i - 1];
+		sum += v[i];
+	}
+
+	cout << sum << endl;
+
+	return 0;
+
+}
