@@ -1,0 +1,60 @@
+// Baekjoon Online Judge Problem. 13023
+
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+using namespace std;
+
+vector<vector<int>> graph;
+vector<int> people;
+static bool arrive;
+void DFS(int depth, int node);
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N, M;
+	cin >> N >> M;
+
+	graph = vector<vector<int>>(N);
+	people = vector<int>(N, false);
+
+	for (int i = 0; i < M; i++) {
+		int a, b;
+		cin >> a >> b;
+		graph[a].push_back(b);
+		graph[b].push_back(a);
+	}
+
+	for (int i = 0; i < N; i++) {
+		DFS(1, i);
+
+		if (arrive)
+			break;
+	}
+	
+	if (arrive)
+		cout << '1';
+	else
+		cout << '0';
+
+	return 0;
+}
+
+void DFS(int depth, int node) {
+	if (arrive || depth == 5) {
+		arrive = true;
+		return;
+	}
+	people[node] = true;
+
+	for (int i : graph[node]) {
+		if (people[i] == false) {
+			DFS(depth + 1, i);
+		}
+	}
+	people[node] = false;
+}
