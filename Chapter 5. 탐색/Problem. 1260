@@ -1,0 +1,73 @@
+// Baekjoon Online Judge Problem. 1260
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+void DFS(vector<vector<int>>& graph, vector<bool>& visited, int node);
+void BFS(vector<vector<int>>& graph, vector<bool>& visited, int node);
+
+int main() {
+	int N, M, V;
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	cin >> N >> M >> V;
+	vector<vector<int>> graph(N + 1);
+	vector<bool> visited1(N + 1, false);
+
+	for (int i = 0; i < M; i++) {
+		int a, b;
+		cin >> a >> b;
+		graph[a].push_back(b);
+		graph[b].push_back(a);
+	}
+
+	for (int i = 0; i < N + 1; i++)
+		sort(graph[i].begin(), graph[i].end());
+
+	DFS(graph, visited1, V);
+	cout << '\n';
+
+	vector<bool> visited2(N + 1, false);
+	BFS(graph, visited2, V);
+
+	return 0;
+}
+
+void DFS(vector<vector<int>>& graph, vector<bool>& visited, int node) {
+	
+	cout << node << ' ';
+	visited[node] = true;
+
+	for (int i : graph[node]) {
+		if (visited[i] == false) {
+			DFS(graph, visited, i);
+		}
+	}
+	return;
+}
+
+void BFS(vector<vector<int>>& graph, vector<bool>& visited, int node) {
+	
+	queue<int> q;
+	q.push(node);
+
+	while (q.empty() != true) {
+		int next = q.front();
+		visited[next] = true; q.pop();
+		cout << next << ' ';
+
+		for (int i : graph[next]) {
+			if (visited[i] == false) {
+				q.push(i);
+				visited[i] = true;
+			}
+		}
+	}
+	return;
+}
