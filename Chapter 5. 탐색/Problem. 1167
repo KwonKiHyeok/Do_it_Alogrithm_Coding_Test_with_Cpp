@@ -1,0 +1,82 @@
+// Baekjoon Online Judge Problem. 1167
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+void BFS(vector<vector<pair<int, int>>>& tree, vector<bool>& visited, int node, vector<int>& length);
+int answer;
+
+int main() {
+	int V;
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	cin >> V;
+	vector<bool> visited(V + 1, false);
+	vector<int> length(V + 1, 0);
+	vector<vector<pair<int, int>>> tree(V + 1); // Change to vector of vector of pairs
+
+	for (int i = 1; i <= V; i++) {
+		int node;
+		cin >> node;
+		while (true) {
+			int a, b;
+			cin >> a;
+
+			if (a == -1) break;
+			cin >> b;
+			tree[node].push_back(pair<int, int>(a, b));
+		}
+	}
+
+
+	BFS(tree, visited, 1, length);
+
+	int maxi = -1, index = -1;
+
+	for (int i = 1; i <= V; i++) {
+		if (maxi < length[i]) {
+			maxi = length[i];
+			index = i;
+		}
+	}
+
+	visited = vector<bool>(V + 1, false);
+	length = vector<int>(V + 1, -1);
+
+	BFS(tree, visited, index, length);
+
+	maxi = -1;
+	for (int i = 1; i <= V; i++) {
+		if (maxi < length[i]) {
+			maxi = length[i];
+		}
+	}
+	cout << maxi;
+	return 0;
+}
+
+void BFS(vector<vector<pair<int, int>>>& tree, vector<bool>& visited, int node, vector<int>& length) {
+
+	visited[node] = true;
+	length[node] = 0;
+	queue<pair<int, int>> q;
+	q.push({ node, 0 });
+
+	while (!q.empty()) {
+		pair<int, int> cur = q.front(); q.pop();
+		visited[cur.first] = true;
+
+		for (pair<int, int> i : tree[cur.first]) {
+
+			if (visited[i.first] == false) {
+				length[i.first] = length[cur.first] + i.second;
+				q.push(i);
+			}
+		}
+	}
+}
