@@ -1,0 +1,50 @@
+// Baekjoon Online Judge Problem. 1920
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N, M, num;
+	cin >> N;
+	vector<int> A(N);
+	
+	for (int i = 0; i < N; i++)
+		cin >> A[i];
+	
+	sort(A.begin(), A.end());
+
+	cin >> M;
+
+	for (int i = 0; i < M; i++) {
+		cin >> num;
+		int start = 0, end = A.size() - 1;
+		int sol = -1;
+
+		while (start <= end) {
+			int mid = (start + end) / 2;
+
+			if (A[mid] == num) {
+				sol = 1;
+				break;
+			}
+			else if (A[mid] <= num)
+				start = mid + 1;
+			else
+				end = mid - 1;
+		}
+
+		if (sol == 1)
+			cout << '1' << '\n';
+		else
+			cout << '0' << '\n';
+	}
+
+	return 0;
+}
