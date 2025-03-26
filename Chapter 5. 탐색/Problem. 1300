@@ -1,0 +1,36 @@
+// Baekjoon Online Judge Problem. 1300
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N, k;
+	cin >> N >> k;
+
+	int start = 1, end = k;
+	
+	while (start <= end) {
+		int mid = (start + end) / 2;
+		int count = 0;
+		
+		for (int i = 1; i <= N; i++) {
+			count += min(mid / i, N);
+		}
+
+		if (count < k)
+			start = mid + 1;
+		else
+			end = mid - 1;
+	}
+
+	cout << start << '\n';
+
+	return 0;
+}
