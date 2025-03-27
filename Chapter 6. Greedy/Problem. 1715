@@ -1,0 +1,44 @@
+// Baekjoon Online Judge Problem. 1715
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+int main() {
+	int N;
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	cin >> N;
+	priority_queue<int, vector<int>, greater<int>> cards;
+
+	for (int i = 0; i < N; i++) {
+		int num;
+		cin >> num;
+		cards.push(num);
+	}
+
+	int answer = 0;
+	
+	if (cards.size() == 1) {
+		cout << 0;
+		return 0;
+	}
+
+	while (cards.size() > 1) {
+		int temp = 0;
+		temp += cards.top();
+		cards.pop();
+		temp += cards.top();
+		cards.pop();
+		cards.push(temp);
+		answer += temp;
+	}
+
+	cout << answer;
+	return 0;
+}
