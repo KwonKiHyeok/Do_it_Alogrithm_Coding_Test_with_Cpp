@@ -1,0 +1,74 @@
+// Baekjoon Online Judge Problem. 1744
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N;
+	cin >> N;
+
+	priority_queue<int> positive;
+	priority_queue<int, vector<int>, greater<int>> negative;
+
+	int num, one = 0, zero = 0;
+
+	for (int i = 0; i < N; i++) {
+		cin >> num;
+
+		if (num == 1)
+			one++;
+		else if (num > 0)
+			positive.push(num);
+		else if (num < 0)
+			negative.push(num);
+		else
+			zero++;
+	}
+
+	int answer = 0;
+
+	while (!negative.empty()) { // negative
+		if (negative.size() > 1) { // if there are more than 1 negative number
+			int a = negative.top();
+			negative.pop();
+			int b = negative.top();
+			negative.pop();
+			answer += a * b;
+		}
+		else { // if there is only one negative number
+			if (zero == 0) { // if there is no zero
+				answer += negative.top();
+				negative.pop();
+			}
+			else // if there is zero
+				negative.pop();
+		}
+	}
+
+	while (!positive.empty()) { // positive
+		if (positive.size() > 1) { // if there are more than 1 positive number
+			int a = positive.top();
+			positive.pop();
+			int b = positive.top();
+			positive.pop();
+			answer += a * b;
+		}
+		else { // if there is only one positive number
+			answer += positive.top();
+			positive.pop();
+		}
+	}
+
+	answer += one;
+
+	cout << answer;
+	return 0;
+}
