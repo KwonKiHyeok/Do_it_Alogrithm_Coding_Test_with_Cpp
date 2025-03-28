@@ -1,0 +1,54 @@
+// Baekjoon Online Judge Problem. 1931
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N;
+
+	cin >> N;
+	vector<pair<int, int>> meetings(N);
+
+	for (int i = 0; i < N; i++) {
+		cin >> meetings[i].first >> meetings[i].second;
+	}
+
+	sort(meetings.begin(), meetings.end(), [](auto& a, auto& b) { // pair의 second로 내림차순 
+		if (a.second == b.second) // 만약 second가 같다면 first로 내림차순
+			return a.first < b.first;
+		return a.second < b.second;
+		});
+
+	int count = 0;
+	int num = 0;
+
+	queue<pair<int, int>> q;
+	q.push(meetings[0]);
+	count++;
+
+	while (!q.empty()) {
+		pair<int, int> temp = q.front();
+		q.pop();
+
+		for (int i = num + 1; i < N; i++) {
+			if (meetings[i].first >= temp.second) {
+				q.push(meetings[i]);
+				count++;
+				num = i;
+				break;
+			}
+		}
+	}
+	
+	cout << count;
+
+	return 0;
+}
