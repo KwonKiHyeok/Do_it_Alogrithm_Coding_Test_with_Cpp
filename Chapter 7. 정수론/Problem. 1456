@@ -1,0 +1,61 @@
+// Baekjoon Online Judge Problem. 1456
+
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	long long A, B;
+	cin >> A >> B;
+
+	vector<long long> prime_number(sqrt(B) + 1);
+	vector<long long> almost_prime;
+
+	for (long long i = 2; i <= sqrt(B); i++)
+		prime_number[i] = i;
+
+
+	for (long long i = 2; i <= sqrt(B); i++) {
+
+		if (prime_number[i] == -1)
+			continue;
+
+		for (long long j = i + i; j <= sqrt(B); j = j + i) {
+			prime_number[j] = -1;
+		}
+	}
+
+	for (long long i = 2; i <= sqrt(B); i++) {
+		if (prime_number[i] == -1)
+			continue;
+
+		almost_prime.push_back(i);
+	}
+
+	long long count = 0;
+
+	for (long long prime : almost_prime) {
+		long long power = prime * prime;
+
+		while (power <= B) {
+			if (A <= power)
+				count += 1;
+
+			if (power > B / prime) // overflow avoid
+				break;
+
+			power *= prime;
+		}
+	}
+
+	cout << count;
+
+	return 0;
+}
