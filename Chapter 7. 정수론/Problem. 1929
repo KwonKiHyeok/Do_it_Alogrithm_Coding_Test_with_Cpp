@@ -1,0 +1,46 @@
+// Baekjoon Online Judge Problem. 1929
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int M, N;
+	cin >> M >> N;
+
+	vector<int> prime_number(N + 1, 0);
+
+	for (int i = 1; i < N + 1; i++)
+		prime_number[i] = i;
+
+
+	for (int i = 2; i < N + 1; i++) {
+		
+		if (prime_number[i] == -1)
+			continue;
+
+		for (int j = 2; j < (N / i) + 1; j++) {
+			if (prime_number[i * j] == -1)
+				continue;
+			
+			prime_number[i * j] = -1;
+		}
+	}
+
+	for (int i = M; i < N + 1; i++) {
+		if (prime_number[i] == -1)
+			continue;
+		else
+			if (i == 1)
+				continue;
+			cout << prime_number[i] << '\n';
+	}
+
+	return 0;
+}
