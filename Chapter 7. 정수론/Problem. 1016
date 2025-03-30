@@ -1,0 +1,44 @@
+// Baekjoon Online Judge Problem. 1016
+
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	long min, max;
+	cin >> min >> max;
+	vector<bool> prime(max - min + 1, false);
+
+	for (long i = 2; i <= sqrt(max); i++) {
+
+		long square = i * i;
+		long start = min / square;
+
+		if (min % square != 0)
+			start++;
+
+		for (long j = start * square; j < max + 1; j += square) {
+
+			if (j >= min)
+				prime[j - min] = true;
+		}
+	}
+
+	int count = 0;
+
+	for (int i = 0; i < max - min + 1; i++) {
+		if (!prime[i])
+			count++;
+	}
+
+	cout << count;
+
+	return 0;
+}
