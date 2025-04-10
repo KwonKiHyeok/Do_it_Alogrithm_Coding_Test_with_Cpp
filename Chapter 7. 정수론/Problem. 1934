@@ -1,0 +1,41 @@
+// Baekjoon Online Judge Problem. 1934
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int T;
+	int a, b;
+	cin >> T;
+
+	for (int i = 0; i < T; i++) {
+		cin >> a >> b;
+
+		int temp_a = a, temp_b = b, c = 0;
+
+		while (a != 0 && b != 0) {
+			if (a > b) {
+				a %= b;
+			}
+			else {
+				b %= a;
+			}
+		};
+
+		if (a == 0)
+			c = b;
+		else
+			c = a;
+
+		cout << c * (temp_a / c) * (temp_b / c) << '\n';
+	}
+
+	return 0;
+}
