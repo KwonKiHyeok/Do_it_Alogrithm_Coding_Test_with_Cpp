@@ -1,0 +1,68 @@
+// Baekjoon Online Judge Problem. 18352
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+void BFS(vector<vector<int>> graph, vector<int> visited, int X, int K);
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	
+
+	int N, M, K, X;
+	cin >> N >> M >> K >> X;
+
+	vector<vector<int>> graph(N + 1);
+	vector<int> visited(N + 1, -1);
+
+	for (int i = 0; i < M; i++) {
+		int A, B;
+		cin >> A >> B;
+
+		graph[A].push_back(B);
+	}
+
+	BFS(graph, visited, X, K);
+
+	return 0;
+}
+
+void BFS(vector<vector<int>> graph, vector<int> visited, int X, int K) {
+	
+	queue<int> q;
+	visited[X]++;
+	q.push(X);
+	
+	while (!q.empty()) {
+		int city = q.front(); 
+		q.pop();
+
+		for (int i : graph[city]) {
+			if (visited[i] == -1) {
+				visited[i] = visited[city] + 1;
+				q.push(i);
+			}
+		}
+	}
+
+	vector<int> result;
+
+	for (int i = 0; i < visited.size(); i++) {
+		if (visited[i] == K)
+			result.push_back(i);
+	}
+
+	if (result.size() == 0)
+		cout << -1;
+	else {
+		sort(result.begin(), result.end());
+
+		for (int i = 0; i < result.size(); i++)
+			cout << result[i] << '\n';
+	}
+}
