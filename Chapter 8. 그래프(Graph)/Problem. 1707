@@ -1,0 +1,78 @@
+// Baekjoon Online Judge Problem. 1707
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+int BFS(vector<vector<int>>& graph, vector<bool>& red, vector<bool>& blue, vector<bool> &visited);
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int K;
+	cin >> K;
+
+	for (int i = 0; i < K; i++) {
+		int V, E;
+		cin >> V >> E;
+		vector<vector<int>> graph(V + 1);
+		vector<bool> red(V + 1, false);
+		vector<bool> blue(V + 1, false);
+
+		for (int j = 0; j < E; j++) {
+			int a, b;
+			cin >> a >> b;
+			graph[a].push_back(b);
+			graph[b].push_back(a);
+		}
+		vector<bool> visited(graph.size(), false);
+		BFS(graph, red, blue, visited);
+	}
+
+	return 0;
+}
+
+int BFS(vector<vector<int>>& graph, vector<bool>& red, vector<bool>& blue, vector<bool> &visited) {
+
+	queue<int> queue;
+
+	for (int i = 1; i < graph.size(); i++) {
+		if (visited[i] == false) {
+			queue.push(i);
+			visited[i] = true;
+			red[i] = true;
+		}
+
+		while (!queue.empty()) {
+			int q = queue.front(); queue.pop();
+
+			for (int j : graph[q]) {
+
+				if (red[q] == true)
+					blue[j] = true;
+				else
+					red[j] = true;
+
+				if (visited[j] == false) {
+					queue.push(j);
+					visited[j] = true;
+				}
+			}
+		}
+	}
+
+	for (int i = 1; i < graph.size(); i++) {
+		if (red[i] == true && blue[i] == true) {
+			cout << "NO" << "\n";
+			return 0;
+		}
+	}
+
+	cout << "YES" << "\n";
+	return 0;
+}
