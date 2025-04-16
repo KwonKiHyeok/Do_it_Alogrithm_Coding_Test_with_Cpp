@@ -1,0 +1,70 @@
+// Baekjoon Online Judge Problem. 2251
+
+#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+using namespace std;
+
+int A, B, C;
+set<int> answer;
+bool visited[201][201];
+
+void DFS(int a, int b) {
+
+	if (visited[a][b] == true)
+		return;
+
+	visited[a][b] = true;
+
+	int c = C - a - b;
+
+	if (a == 0)
+		answer.insert(c);
+
+	if (a > 0 && b < B) { // A -> B
+		int move = min(a, B - b);
+		DFS(a - move, b + move);
+	}
+	if (a > 0 && c < C) { // A -> C
+		int move = min(a, C - c);
+		DFS(a - move, b);
+	}
+	if (b > 0 && a < A) { // B -> A
+		int move = min(b, A - a);
+		DFS(a + move, b - move);
+	}
+	if (b > 0 && b < C) { // B -> C
+		int move = min(b, C - c);
+		DFS(a, b - move);
+	}
+	if (c > 0 && a < A) { // C -> A
+		int move = min(c, A - a);
+		DFS(a + move, b);
+	}
+	if (c > 0 && b < B) { // C -> B
+		int move = min(c, B - b);
+		DFS(a, b + move);
+	}
+
+	return;
+}
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	cin >> A >> B >> C;
+
+	DFS(0, 0);
+
+	for (int i : answer) {
+		cout << i << ' ';
+	}
+	cout << '\n';
+
+	return 0;
+}
+
