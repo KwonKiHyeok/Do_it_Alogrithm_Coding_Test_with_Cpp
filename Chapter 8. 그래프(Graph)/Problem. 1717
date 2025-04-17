@@ -1,0 +1,60 @@
+// Baekjoon Online Judge Problem. 1717
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int find_node(vector<int> &set, int a) {
+
+	if (set[a] != a) {
+		set[a] = find_node(set, set[a]);
+	}
+	
+	return set[a];
+}
+
+void unite(vector<int> &set, int a, int b) {
+
+	int a_node = find_node(set, a);
+	int b_node = find_node(set, b);
+
+	if (a_node != b_node) {
+		set[b_node] = a_node;
+	}
+}
+
+void find(vector<int> &set, int a, int b) {
+
+	int a_node = find_node(set, a);
+	int b_node = find_node(set, b);
+
+	if (a_node == b_node)
+		cout << "YES" << '\n';
+	else
+		cout << "NO" << '\n';
+}
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int n, m;
+	cin >> n >> m;
+	vector<int> set(n + 1);
+
+	for (int i = 0; i <= n; i++)
+		set[i] = i;
+
+	for (int i = 0; i < m; i++) {
+		int x, a, b;
+		cin >> x >> a >> b;
+
+		if (x == 0) unite(set, a, b);
+		else find(set, a, b);
+	}
+
+	return 0;
+}
